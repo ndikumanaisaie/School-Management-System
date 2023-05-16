@@ -39,7 +39,7 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-## Ndikumana Isaie Portfolio
+## School Management System
 
 > This is my portofolio. A complete mobolie first website that features all my projects, skills and ambitions. It is completely written in modern react using functional component along with Material UI and Styled component.
 ## 🛠 Built With <a name="built-with"></a>
