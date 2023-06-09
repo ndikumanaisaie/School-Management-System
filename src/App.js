@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Register from '/src/pages/Register.jsx'
+import Register from './pages/Register.jsx'
 // import { useDispatch } from 'react-redux';
 // import { Routes, Route } from 'react-router-dom';
 // import { ToastContainer } from 'react-toastify';
