@@ -50,7 +50,6 @@ const App = () => {
 	return (
 		<div className='app' id="outer-container">
 			 <div id="page-wrap">
-				<Register />
 				<Routes>
 					{/* <Route path='/' element={ <Home />} /> */}
 					<Route path='/login' element={ <Login />} />
