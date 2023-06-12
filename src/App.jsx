@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Register from './pages/Register.jsx'
 // import { useDispatch } from 'react-redux';
-// import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 // import { ToastContainer } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
 // import './app.css';
 // import Home from './pages/Home.jsx';
-// import Login from './pages/Login.jsx';
-// import Register from './pages/Register.jsx';
+import Login from './pages/Login.jsx';
 // import Post from './pages/Post.jsx';
 // import Header from './components/Header.jsx';
 // import SinglePost from './pages/SinglePost.jsx';
@@ -52,38 +51,11 @@ const App = () => {
 		<div className='app' id="outer-container">
 			 <div id="page-wrap">
 				<Register />
-				{/* <Header />
-				<ToastContainer />
 				<Routes>
-					<Route path='/' element={ <Home />} />
-					<Route path='/post/search' element={ <Home />} />
-					<Route path='/post/tag/:tag' element={ <TagPosts />} />
+					{/* <Route path='/' element={ <Home />} /> */}
 					<Route path='/login' element={ <Login />} />
 					<Route path='/register' element={ <Register />} />
-					<Route
-						path='/post'
-						element={
-							<PrivateRoute>
-								<Post />
-							</PrivateRoute>
-						} />
-					<Route
-						path='/editPost/:id'
-						element={
-							<PrivateRoute>
-								<Post />
-							</PrivateRoute>
-						} />
-					<Route path='/post/:id' element={ <SinglePost />} />
-					<Route
-						path='/dashboard'
-						element={
-							<PrivateRoute>
-								<Dashboard />
-							</PrivateRoute>
-						} />
-					<Route path='*' element={<NotFound />}/>
-				</Routes> */}
+				</Routes>
 			 </div>
 		</div>
 	);
