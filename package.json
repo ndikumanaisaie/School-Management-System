@@ -5,6 +5,7 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.3",
     "@mui/x-date-pickers": "^6.7.0",
+    "axios": "^1.4.0",
     "dayjs": "^1.11.8",
     "react-router-dom": "^6.12.1",
     "react-scripts": "^5.0.1"
@@ -25,5 +26,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^8.43.0",
+    "eslint-plugin-react": "^7.32.2"
   }
 }
