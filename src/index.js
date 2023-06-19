@@ -2,23 +2,22 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
-// import { Provider } from 'react-redux';
-// import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 import App from './App.jsx';
-// import authReducer from './features/authSlice.js';
+import authReducer from './features/authSlice.js';
 // import postReducer from './features/postSlice.js';
 
-// const store = configureStore({
-// 	reducer: {
-// 		auth: authReducer,
-// 		posts: postReducer,
-// 	},
-// });
+const store = configureStore({
+	reducer: {
+		auth: authReducer,
+	},
+});
 const root = createRoot(document.getElementById('root'));
 root.render(
 	<BrowserRouter>
-		{/* <Provider store={store}> */}
+		<Provider store={store}>
 			<App />
-		{/* </Provider> */}
+		</Provider>
 	</BrowserRouter>,
 );

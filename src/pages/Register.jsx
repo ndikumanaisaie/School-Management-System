@@ -1,11 +1,10 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -15,6 +14,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
+import { register } from '../features/authSlice.js';
 
 const Copyright = (props) => {
   return (
@@ -29,19 +34,57 @@ const Copyright = (props) => {
   );
 }
 
+const initialState = {
+	firstName: '',
+	lastName: '',
+	email: '',
+	password: '',
+	confirmPassword: '',
+  birthDate: new Date(),
+  phoneNumber: '',
+};
+
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 const SignUp = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+
+	const [formValue, setFormValue] = useState(initialState);
+  const [bDate, setDate] = useState(new Date().toLocaleDateString('fr-FR'));
+	const {
+		firstName, lastName, email, password, confirmPassword, birthDate, phoneNumber,
+	} = formValue;
+
+  console.log(phoneNumber);
+
+	const { isLoading, error } = useSelector((state) => ({ ...state.auth }));
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		error && toast.error(error);
+	}, [error]);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (password !== confirmPassword) {
+			return toast.error('Password should match');
+		}
+    
+		if (email && password && firstName && lastName && confirmPassword && birthDate && phoneNumber) {
+			console.log('submitted');
+      const newFormValue = { ...formValue, birthDate: bDate}
+      dispatch(register({ newFormValue, navigate, toast }));
+      console.log(newFormValue);
+		} 
+	};
+	const onInputChange = (e) => {
+		const { name, value } = e.target;
+		setFormValue({ ...formValue, [name]: value, });
+	};
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -67,6 +110,8 @@ const SignUp = () => {
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
+                  value={firstName}
+							    onChange={onInputChange}
                   required
                   fullWidth
                   id="firstName"
@@ -78,6 +123,8 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
+                  value={lastName}
+							    onChange={onInputChange}
                   id="lastName"
                   label="Last Name"
                   name="lastName"
@@ -88,9 +135,12 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
+                  value={email}
+							    onChange={onInputChange}
                   id="email"
                   label="Email Address"
                   name="email"
+                  type="email"
                   autoComplete="email"
                 />
               </Grid>
@@ -98,6 +148,8 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
+                  value={password}
+							    onChange={onInputChange}
                   name="password"
                   label="Password"
                   type="password"
@@ -109,6 +161,8 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
+                  value={confirmPassword}
+							    onChange={onInputChange}
                   name="confirmPassword"
                   label="Confirm Password"
                   type="password"
@@ -120,16 +174,24 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
-                  id="phone"
+                  value={phoneNumber}
+							    onChange={onInputChange}
+                  name="phoneNumber"
                   label="Phone Number"
-                  name="phone"
                   type="number"
-                  autoComplete="phone number"
+                  id="phone"
+                  autoComplete="new-number"
                 />
               </Grid>
               <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker />
+                  <DatePicker 
+                    value={bDate}
+                    onChange={(date) => {
+                      const d = new Date(date);
+                      setDate(d);
+                    }}
+                  />
                 </LocalizationProvider>
               </Grid>
               <Grid item xs={12}>
