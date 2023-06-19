@@ -4,20 +4,20 @@ import { BrowserRouter } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import App from './App.jsx';
-import authReducer from './features/authSlice.js';
+import App from './App';
+import authReducer from './features/authSlice';
 // import postReducer from './features/postSlice.js';
 
 const store = configureStore({
-	reducer: {
-		auth: authReducer,
-	},
+  reducer: {
+    auth: authReducer,
+  },
 });
 const root = createRoot(document.getElementById('root'));
 root.render(
-	<BrowserRouter>
-		<Provider store={store}>
-			<App />
-		</Provider>
-	</BrowserRouter>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
 );

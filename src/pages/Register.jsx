@@ -19,27 +19,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { register } from '../features/authSlice.js';
+import { register } from '../features/authSlice';
 
-const Copyright = (props) => {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://sms.com/">
-        School Management System
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+const Copyright = (props) => (
+  <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    {'Copyright © '}
+    <Link color="inherit" href="https://sms.com/">
+      School Management System
+    </Link>
+    {' '}
+    {new Date().getFullYear()}
+    .
+  </Typography>
+);
 
 const initialState = {
-	firstName: '',
-	lastName: '',
-	email: '',
-	password: '',
-	confirmPassword: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
   birthDate: new Date(),
   phoneNumber: '',
 };
@@ -49,42 +48,40 @@ const initialState = {
 const defaultTheme = createTheme();
 
 const SignUp = () => {
-
-	const [formValue, setFormValue] = useState(initialState);
+  const [formValue, setFormValue] = useState(initialState);
   const [bDate, setDate] = useState(new Date().toLocaleDateString('fr-FR'));
-	const {
-		firstName, lastName, email, password, confirmPassword, birthDate, phoneNumber,
-	} = formValue;
+  const {
+    firstName, lastName, email, password, confirmPassword, birthDate, phoneNumber,
+  } = formValue;
 
   console.log(phoneNumber);
 
-	const { isLoading, error } = useSelector((state) => ({ ...state.auth }));
+  const { isLoading, error } = useSelector((state) => ({ ...state.auth }));
 
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-	useEffect(() => {
-		error && toast.error(error);
-	}, [error]);
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (password !== confirmPassword) {
-			return toast.error('Password should match');
-		}
-    
-		if (email && password && firstName && lastName && confirmPassword && birthDate && phoneNumber) {
-			console.log('submitted');
-      const newFormValue = { ...formValue, birthDate: bDate}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      return toast.error('Password should match');
+    }
+
+    if (email && password && firstName && lastName && confirmPassword && birthDate && phoneNumber) {
+      console.log('submitted');
+      const newFormValue = { ...formValue, birthDate: bDate };
       dispatch(register({ newFormValue, navigate, toast }));
       console.log(newFormValue);
-		} 
-	};
-	const onInputChange = (e) => {
-		const { name, value } = e.target;
-		setFormValue({ ...formValue, [name]: value, });
-	};
-
+    }
+  };
+  const onInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValue({ ...formValue, [name]: value });
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -111,7 +108,7 @@ const SignUp = () => {
                   autoComplete="given-name"
                   name="firstName"
                   value={firstName}
-							    onChange={onInputChange}
+                  onChange={onInputChange}
                   required
                   fullWidth
                   id="firstName"
@@ -124,7 +121,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   value={lastName}
-							    onChange={onInputChange}
+                  onChange={onInputChange}
                   id="lastName"
                   label="Last Name"
                   name="lastName"
@@ -136,7 +133,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   value={email}
-							    onChange={onInputChange}
+                  onChange={onInputChange}
                   id="email"
                   label="Email Address"
                   name="email"
@@ -149,7 +146,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   value={password}
-							    onChange={onInputChange}
+                  onChange={onInputChange}
                   name="password"
                   label="Password"
                   type="password"
@@ -162,7 +159,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   value={confirmPassword}
-							    onChange={onInputChange}
+                  onChange={onInputChange}
                   name="confirmPassword"
                   label="Confirm Password"
                   type="password"
@@ -175,7 +172,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   value={phoneNumber}
-							    onChange={onInputChange}
+                  onChange={onInputChange}
                   name="phoneNumber"
                   label="Phone Number"
                   type="number"
@@ -185,7 +182,7 @@ const SignUp = () => {
               </Grid>
               <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker 
+                  <DatePicker
                     value={bDate}
                     onChange={(date) => {
                       const d = new Date(date);
@@ -222,6 +219,6 @@ const SignUp = () => {
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default SignUp;

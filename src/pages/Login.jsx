@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -20,9 +20,10 @@ function Copyright(props) {
       {'Copyright © '}
       <Link color="inherit" href="https://sms.com/">
         School Management System
-      </Link>{' '}
+      </Link>
+      {' '}
       {new Date().getFullYear()}
-      {'.'}
+      .
     </Typography>
   );
 }
@@ -108,6 +109,6 @@ const Login = () => {
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default Login;
