@@ -1,5 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +14,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { toast } from 'react-toastify';
+
+import { login } from '../features/authSlice.js';
 
 function Copyright(props) {
   return (
@@ -28,17 +32,37 @@ function Copyright(props) {
   );
 }
 
+const initialState = {
+  email: '',
+  password: '',
+};
+
 const defaultTheme = createTheme();
 
 const Login = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const [formValue, setFormValue] = useState(initialState);
+	const { email, password } = formValue;
+
+	const { isLoading, error } = useSelector((state) => ({ ...state.auth }));
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		error && toast.error(error);
+	}, [error]);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		if (email && password) {
+			dispatch(login({ formValue, navigate, toast }));
+		}
+	};
+	const onInputChange = (e) => {
+		const { name, value } = e.target;
+		setFormValue({ ...formValue, [name]: value });
+	};
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -66,6 +90,8 @@ const Login = () => {
               id="email"
               label="Email Address"
               name="email"
+              value={email}
+              onChange={onInputChange}
               autoComplete="email"
               autoFocus
             />
@@ -74,6 +100,8 @@ const Login = () => {
               required
               fullWidth
               name="password"
+              value={password}
+              onChange={onInputChange}
               label="Password"
               type="password"
               id="password"
