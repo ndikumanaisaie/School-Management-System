@@ -170,6 +170,7 @@ const SignUp = () => {
                   label="Confirm Password"
                   type="password"
                   id="cpassword"
+                  variant="outlined"
                   autoComplete="new-password"
                 />
               </Grid>
@@ -178,6 +179,10 @@ const SignUp = () => {
                   defaultCountry={'us'} 
                   value={phoneNumber}
                   onChange={handleNumberChange} 
+                  fullWidth
+                  label="Phone number"
+                  margin="dense"
+                  variant="outlined"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -188,6 +193,10 @@ const SignUp = () => {
                       const d = new Date(date);
                       setDate(d);
                     }}
+                    fullWidth
+                    label="Birth date"
+                    margin="dense"
+                    variant="outlined"
                   />
                 </LocalizationProvider>
               </Grid>
