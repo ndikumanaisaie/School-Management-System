@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import MuiPhoneNumber from 'material-ui-phone-number-2'
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,7 +41,7 @@ const initialState = {
   password: '',
   confirmPassword: '',
   birthDate: new Date(),
-  phoneNumber: '',
+  phoneNumber: '0',
 };
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -50,6 +51,7 @@ const defaultTheme = createTheme();
 const SignUp = () => {
   const [formValue, setFormValue] = useState(initialState);
   const [bDate, setDate] = useState(new Date().toLocaleDateString('fr-FR'));
+  const [phoneNum, setPhoneNum] = useState(0);
   const {
     firstName, lastName, email, password, confirmPassword, birthDate, phoneNumber,
   } = formValue;
@@ -73,7 +75,7 @@ const SignUp = () => {
 
     if (email && password && firstName && lastName && confirmPassword && birthDate && phoneNumber) {
       console.log('submitted');
-      const newFormValue = { ...formValue, birthDate: bDate };
+      const newFormValue = { ...formValue, phoneNumber: phoneNum, birthDate: bDate };
       dispatch(register({ newFormValue, navigate, toast }));
       console.log(newFormValue);
     }
@@ -81,6 +83,10 @@ const SignUp = () => {
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
+  };
+
+  const handleNumberChange = (number) => {
+    setPhoneNum(number);
   };
 
   return (
@@ -168,16 +174,10 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
+                <MuiPhoneNumber
+                  defaultCountry={'us'} 
                   value={phoneNumber}
-                  onChange={onInputChange}
-                  name="phoneNumber"
-                  label="Phone Number"
-                  type="number"
-                  id="phone"
-                  autoComplete="new-number"
+                  onChange={handleNumberChange} 
                 />
               </Grid>
               <Grid item xs={12}>
